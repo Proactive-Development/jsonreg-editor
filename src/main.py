@@ -1,18 +1,17 @@
 import os
 import json
+import argparse
+from colorama import Fore, Back, Style
 try:
     import jsonreg
 except:
-    print("I see you don't have jsonreg installed can you install it using pip")
+    print("I see you don't have jsonreg installed can you install it using python -m pip install jsonreg")
     exit()
-import argparse
 try:
     from tabulate import tabulate
 except:
-    print("I see you don't have tabulate installed can you install it using pip")
+    print("I see you don't have tabulate installed can you install it using python -m pip install tabulate")
     exit()
-from colorama import Fore, Back, Style
-
 parser = argparse.ArgumentParser(description='')    
 def list():
     print("JSONreg files in this directory:")
