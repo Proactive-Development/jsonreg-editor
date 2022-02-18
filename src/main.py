@@ -1,5 +1,8 @@
+import datetime
+from email import message
 import os
 import json
+import pylog
 import argparse
 from colorama import Fore, Back, Style
 try:
@@ -12,7 +15,19 @@ try:
 except:
     print("I see you don't have tabulate installed can you install it using python -m pip install tabulate")
     exit()
-parser = argparse.ArgumentParser(description='')    
+global verbose
+verbose = False
+start_time = datetime.datetime.now().strftime("%b-%d-%Y")
+parser = argparse.ArgumentParser(description='')
+class log:
+    def message(log_message):
+        if verbose == True:
+            print("[OK]"+log_message)
+            pylog.log(start_time+".log",log_message)
+    def error(log_message):
+        if verbose == True:
+            print("[ERROR]"+log_message)
+            pylog.error(start_time+".log",log_message)
 def list():
     print("JSONreg files in this directory:")
     num = 1
@@ -59,6 +74,7 @@ def remove():
     try:
         os.remove(file_name)
     except FileNotFoundError:
+        log.error("File: "+file_name+" dose not exist")
         print(Fore.RED+"This file dose not exist"+Style.RESET_ALL)
 def create():
     file_name = input("File location>")
@@ -72,6 +88,7 @@ def edit():
     jsonreg.write(file_name,data)
 def read():
     file_name = input("File location>")
+    log.message("Reading: "+file_name)
     print(jsonreg.get.data(file_name))
 if __name__ == "__main__":
     print(Fore.GREEN + 'Welcome to JSONreg editor'+Style.RESET_ALL)
@@ -80,7 +97,11 @@ if __name__ == "__main__":
     parser.add_argument("-mk",action='store_true')
     parser.add_argument("-r",action='store_true')
     parser.add_argument("-ed",action='store_true')
+    parser.add_argument("-v",action='store_true')
     args = parser.parse_args()
+    if args.v:
+        verbose = True   
+        print("Verbose mode activated")
     if args.ls:
         list()
     elif args.rm:
@@ -90,7 +111,8 @@ if __name__ == "__main__":
     elif args.r:
         read()
     elif args.ed:
-        edit()        
+        edit()   
+  
     else:
         print("Next time use a argument to get started")
         print("\t-ls    List the JSONreg files in a dir")
