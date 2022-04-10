@@ -1,0 +1,14 @@
+{
+    "name": "jsonreg-editor",
+    "description": "A simple jsonreg management system",
+    "version": "0.1.0",
+    "main_file": "none",
+    "author": "Proactive Development",
+    "license": "none",
+    "url": "none",
+    "email": "none",
+    "languages": [
+        "python"
+    ],
+    "actions": {}
+}
